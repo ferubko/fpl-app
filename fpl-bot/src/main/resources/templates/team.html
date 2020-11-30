@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org " dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Team</title>
+    <!--    <link th:href="@{/dist/style.min.css}" rel="stylesheet">-->
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/dist/js/sidebarmenu.js"></script>
+    <script src="/dist/js/custom.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+<div id="main-wrapper">
+    <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+            <div class="navbar-header" data-logobg="skin5">
+                <!-- This is for the sidebar toggle which is visible on mobile only -->
+                <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                        class="ti-menu ti-close"></i></a>
+                <a class="navbar-brand" href="index.html">
+                    <b class="logo-icon p-l-10">
+                        <img src="../static/assets/images/logo-icon.png" alt="homepage" class="light-logo"/>
+                    </b>
+                    <span class="logo-text">
+                             <img src="../static/assets/images/logo-text.png" alt="homepage" class="light-logo"/>
+                        </span>
+                </a>
+                <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                   data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                   aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <ul class="navbar-nav float-left mr-auto">
+                    <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light"
+                                                              href="javascript:void(0)" data-sidebartype="mini-sidebar"><i
+                            class="mdi mdi-menu font-24"></i></a></li>
+                </ul>
+                <ul class="navbar-nav float-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"> <i
+                                class="font-24" th:utext="${userName}">Test name</i>
+                        </a>s
+                    </li>
+                    <li class="nav-item dropdown">
+                        <div class="text-muted waves-effect waves-dark pro-pic">
+                            <form th:action="@{/logout}" method="get">
+                                <button class="btn btn-md btn-danger btn-block" name="registration"
+                                        type="Submit">Logout
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <aside class="left-sidebar" data-sidebarbg="skin5">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav" class="p-t-30">
+                    <li class="sidebar-item">
+                        <a type="button" class="btn btn-primary" href="/manager">
+                            Bot User
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a type="button" class="btn btn-primary" href="/league">
+                            Niko
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+    </aside>
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Team</h4>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="card">
+                <h3 class="page-title">GoalKeepers</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Points Per Game</th>
+                        <th scope="col">Total Points</th>
+                        <th scope="col">Creativity</th>
+                        <th scope="col">Influence</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${goalkeepers.empty}" scope="row">
+                        <td> No goalkeepers Available</td>
+                    </tr>
+                    <tr data-th-each="goalkeeper : ${goalkeepers}" scope="row">
+                        <td data-th-text="${goalkeeper.footballerName}">1</td>
+                        <td data-th-text="${goalkeeper.team}">1</td>
+                        <td data-th-text="${goalkeeper.pointsPerGame}">3</td>
+                        <td data-th-text="${goalkeeper.totalPoints}">2</td>
+                        <td data-th-text="${goalkeeper.creativity}">4</td>
+                        <td data-th-text="${goalkeeper.influence}">4</td>
+                        <td data-th-text="${goalkeeper.cost}">4</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h3 class="page-title">Defenders</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Points Per Game</th>
+                        <th scope="col">Total Points</th>
+                        <th scope="col">Creativity</th>
+                        <th scope="col">Influence</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${defenders.empty}" scope="row">
+                        <td> No defenders Available</td>
+                    </tr>
+                    <tr data-th-each="defender : ${defenders}" scope="row">
+                        <td data-th-text="${defender.footballerName}">1</td>
+                        <td data-th-text="${defender.team}">1</td>
+                        <td data-th-text="${defender.pointsPerGame}">3</td>
+                        <td data-th-text="${defender.totalPoints}">2</td>
+                        <td data-th-text="${defender.creativity}">4</td>
+                        <td data-th-text="${defender.influence}">4</td>
+                        <td data-th-text="${defender.cost}">4</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h3 class="page-title">Strikers</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Points Per Game</th>
+                        <th scope="col">Total Points</th>
+                        <th scope="col">Creativity</th>
+                        <th scope="col">Influence</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${strikers.empty}" scope="row">
+                        <td> No strikers Available</td>
+                    </tr>
+                    <tr data-th-each="striker : ${strikers}" scope="row">
+                        <td data-th-text="${striker.footballerName}">1</td>
+                        <td data-th-text="${striker.team}">1</td>
+                        <td data-th-text="${striker.pointsPerGame}">3</td>
+                        <td data-th-text="${striker.totalPoints}">2</td>
+                        <td data-th-text="${striker.creativity}">4</td>
+                        <td data-th-text="${striker.influence}">4</td>
+                        <td data-th-text="${striker.cost}">4</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card">
+                <h3 class="page-title">Forwards</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Team</th>
+                        <th scope="col">Points Per Game</th>
+                        <th scope="col">Total Points</th>
+                        <th scope="col">Creativity</th>
+                        <th scope="col">Influence</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${forwards.empty}" scope="row">
+                        <td> No forwards Available</td>
+                    </tr>
+                    <tr data-th-each="forward : ${forwards}" scope="row">
+                        <td data-th-text="${forward.footballerName}">1</td>
+                        <td data-th-text="${forward.team}">1</td>
+                        <td data-th-text="${forward.pointsPerGame}">3</td>
+                        <td data-th-text="${forward.totalPoints}">2</td>
+                        <td data-th-text="${forward.creativity}">4</td>
+                        <td data-th-text="${forward.influence}">4</td>
+                        <td data-th-text="${forward.cost}">4</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="footer text-center">
+            End
+        </footer>
+    </div>
+</div>
+</body>
+</html>

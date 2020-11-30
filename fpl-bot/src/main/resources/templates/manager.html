@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org " dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Fpl Admin</title>
+    <!--    <link th:href="@{/dist/style.min.css}" rel="stylesheet">-->
+    <link href="/dist/css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/dist/js/sidebarmenu.js"></script>
+    <script src="/dist/js/custom.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+    </script>
+</head>
+
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+<div id="main-wrapper">
+    <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+            <div class="navbar-header" data-logobg="skin5">
+                <!-- This is for the sidebar toggle which is visible on mobile only -->
+                <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                        class="ti-menu ti-close"></i></a>
+                <a class="navbar-brand" href="index.html">
+                    <b class="logo-icon p-l-10">
+                        <img src="../static/assets/images/logo-icon.png" alt="homepage" class="light-logo"/>
+
+                    </b>
+                    <span class="logo-text">
+                             <img src="../static/assets/images/logo-text.png" alt="homepage" class="light-logo"/>
+
+                        </span>
+                </a>
+                <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                   data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                   aria-expanded="false" aria-label="Toggle navigation"><i class="ti-more"></i></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <ul class="navbar-nav float-left mr-auto">
+                    <li class="nav-item d-none d-md-block"><a class="nav-link sidebartoggler waves-effect waves-light"
+                                                              href="javascript:void(0)" data-sidebartype="mini-sidebar"><i
+                            class="mdi mdi-menu font-24"></i></a></li>
+                </ul>
+                <ul class="navbar-nav float-right">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" id="2"> <i
+                                class="font-24" th:utext="${userName}">Test name</i>
+                        </a>s
+                    </li>
+                    <li class="nav-item dropdown">
+                        <div class="text-muted waves-effect waves-dark pro-pic">
+                            <form th:action="@{/logout}" method="get">
+                                <button class="btn btn-md btn-danger btn-block" name="registration"
+                                        type="Submit">Logout
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <aside class="left-sidebar" data-sidebarbg="skin5">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav" class="p-t-30">
+                    <li class="sidebar-item">
+                        <a type="button" class="btn btn-primary" href="/league">
+                            Niko
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <button type="button" class="btn btn-primary addUser" data-toggle="modal"
+                                data-target="#addUser">Add user
+                        </button>
+                    </li>
+                    <li class="sidebar-item">
+                        <form th:action="@{/data-synchronization}" method="post">
+                            <button type="submit" class="btn btn-primary">Synchronize</button>
+                        </form>
+                    </li>
+                    <li class="sidebar-item">
+                        <button type="button" class="btn btn-primary sendStandings" data-toggle="modal"
+                                data-target="#sendStandings">Send Standings
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+    </aside>
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Users</h4>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="card">
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Chat Id</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Allowed</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${botUsers.empty}" scope="row">
+                        <td> No Users Available</td>
+                    </tr>
+                    <tr data-th-each="user : ${botUsers}" scope="row">
+                        <td style="display:none" data-th-text="${user.id}">...</td>
+                        <td data-th-text="${user.chatId}">...</td>
+                        <td data-th-text="${user.userName}">...</td>
+                        <td data-th-text="${user.allowedToReceiveMessage}">...</td>
+                        <td>
+                            <button class="btn btn-info btn-sm eBtn" data-toggle="modal" data-target="#editUser"
+                                    th:attrappend="data-target=${user.id}">
+                                Edit
+                            </button>
+                            <div class="modal fade" id="editUser" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true" th:attrappend="id=${user.id}">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form role="form" th:action="@{/botusers}" method="post">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <input id="editId" path="editId" name="id" type="hidden"
+                                                               th:value="${user.id}"
+                                                               class="form-control input-md"/>
+                                                        <input id="editChatId" path="editChatId" name="chatId"
+                                                               type="hidden"
+                                                               placeholder="editChatId" th:value="${user.chatId}"
+                                                               class="form-control input-md"/>
+                                                        <input id="editUserName" path="editUserName" name="userName"
+                                                               type="hidden"
+                                                               placeholder="editUserName" th:value="${user.userName}"
+                                                               class="form-control input-md"/>
+                                                        <div>
+                                                            <label th:for="editAllowed">Allow receive message</label>
+                                                            <input type="checkbox" id="editAllowed"
+                                                                   name="allowedToReceiveMessage"
+                                                                   th:checked="${user.allowedToReceiveMessage}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label" for="submitEdit"></label>
+                                                        <div class="col-md-4">
+                                                            <button id="submitEdit" name="submit"
+                                                                    class="btn btn-primary">
+                                                                Submit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-danger btn-sm deleteUser" data-toggle="modal"
+                                    data-target="#deleteUser" th:attrappend="data-target=${user.id}">
+                                Delete
+                            </button>
+
+                            <!--                            <a th:href="@{botusers/{id}(id=${user.id})}" class="btn btn-danger btn-sm deleteBtn">Delete-->
+                            <!--                            </a>-->
+                            <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true" th:attrappend="id=${user.id}">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongDeleteTitle">Delete user</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal" th:action="@{/deleting-botusers}"
+                                                  method="post">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <input id="deleteId" path="deleteId" name="id"
+                                                               th:value="${user.id}" type="hidden"
+                                                               class="form-control input-md"/>
+                                                        <input id="deleteChatId" path="deleteChatId" name="chatId"
+                                                               th:value="${user.chatId}"
+                                                               type="hidden"
+                                                               class="form-control input-md"/>
+                                                        <input id="deleteUserName" path="deleteUserName" name="userName"
+                                                               th:value="${user.userName}"
+                                                               type="hidden"
+                                                               class="form-control input-md"/>
+
+                                                        <input id="deleteAllowed" path="deleteAllowed" type="hidden"
+                                                               name="allowedToReceiveMessage"
+                                                               th:value="${user.allowedToReceiveMessage}"/>
+                                                        <h5>Are you sure want to delete user?</h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label"
+                                                               for="submitDelete"></label>
+                                                        <div class="col-md-4">
+                                                            <button id="submitDelete" name="submit"
+                                                                    class="btn btn-danger">
+                                                                Delete
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <footer class="footer text-center">
+            End
+        </footer>
+    </div>
+</div>
+<div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongAddTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" th:action="@{/new-botusers}" method="post">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <input id="addChatId" path="addChatId" name="chatId"
+                                       placeholder="Chat Id" class="form-control input-md"/>
+                                <input id="addUserName" path="addUserName" name="userName"
+                                       placeholder="User Name" class="form-control input-md"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="submitAdd"></label>
+                            <div class="col-md-4">
+                                <button id="submitAdd" name="submit" class="btn btn-primary">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="sendStandings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendStandingsTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" th:action="@{/resultTable}" method="post">
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-md-4">
+                                <select name="chatId">
+                                    <option th:each="user : ${botUsers}"
+                                            th:value="${user.chatId}"
+                                            th:text="${user.userName}">none
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="submitSend"></label>
+                            <div class="col-md-4">
+                                <button id="submitSend" name="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
