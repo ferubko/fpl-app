@@ -86,6 +86,13 @@
                     <wait>1000</wait>
                     <maxAttempts>180</maxAttempts>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

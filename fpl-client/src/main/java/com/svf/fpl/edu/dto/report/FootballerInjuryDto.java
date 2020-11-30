@@ -6,10 +6,6 @@ public class FootballerInjuryDto implements Serializable {
     private String footballerName;
     private String injuryName;
 
-    enum SOme {
-        df, fdd, fdf
-    }
-
     public FootballerInjuryDto(String footballerName, String injuryName) {
         this.footballerName = footballerName;
         this.injuryName = injuryName;

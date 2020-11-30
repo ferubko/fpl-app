@@ -20,12 +20,6 @@ import java.io.IOException;
 @ControllerAdvice
 public class ErrorController implements AccessDeniedHandler {
 
-    /**
-     * Generates an Error page by intercepting exceptions generated from HttpFirewall.
-     *
-     * @param ex A RequestRejectedException exception.
-     * @return The tile definition name for the page.
-     */
     @ExceptionHandler(RequestRejectedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleRequestRejectedException(final HttpServletRequest request, final RequestRejectedException ex) {
@@ -33,12 +27,6 @@ public class ErrorController implements AccessDeniedHandler {
         return "error";
     }
 
-    /**
-     * Generates a Server Error page.
-     *
-     * @param ex An exception.
-     * @return The tile definition name for the page.
-     */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleException(final Exception ex) {
