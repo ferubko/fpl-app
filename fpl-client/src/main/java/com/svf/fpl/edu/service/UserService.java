@@ -18,8 +18,7 @@ public class UserService {
     @Autowired
     private AdminUserRoleRepository adminUserRoleRepository;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    private BCryptPasswordEncoder passwordEncoder;
 
     public AdminUser findUserByEmail(String email) {
         return adminUserRepository.findByEmail(email);
@@ -30,7 +29,7 @@ public class UserService {
     }
 
     public AdminUser saveUser(AdminUser user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         AdminUserRole userRole = adminUserRoleRepository.findByRole("ADMIN");
         user.setRoles(new HashSet<>(Arrays.asList(userRole)));
