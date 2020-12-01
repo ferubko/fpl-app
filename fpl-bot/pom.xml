@@ -83,6 +83,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+                    <mainClass>svf.fpl.edu.bot.FplBotApi</mainClass>
                     <wait>1000</wait>
                     <maxAttempts>180</maxAttempts>
                 </configuration>
