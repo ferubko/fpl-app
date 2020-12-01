@@ -1,1 +1,1 @@
-web: java -jar fpl-bot/target/fpl-bot-0.0.1.jar
+web: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar fpl-bot/target/*.jar
