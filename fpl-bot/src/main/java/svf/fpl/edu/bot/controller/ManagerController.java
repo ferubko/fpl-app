@@ -1,16 +1,22 @@
 package svf.fpl.edu.bot.controller;
 
+import com.svf.fpl.edu.entity.AdminUser;
 import com.svf.fpl.edu.entity.BotUser;
 import com.svf.fpl.edu.service.BotUserService;
 import com.svf.fpl.edu.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import svf.fpl.edu.bot.dto.BotUserDto;
 import svf.fpl.edu.bot.menu.MenuBot;
 import svf.fpl.edu.bot.service.FplUpdateService;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -23,6 +29,19 @@ public class ManagerController {
     private FplUpdateService fplUpdateService;
     @Autowired
     private MenuBot menuBot;
+
+    @RequestMapping(value = "/manager", method = RequestMethod.GET)
+    public ModelAndView manager() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<BotUser> botUsers = botUserService.selectBotUsers();
+        AdminUser user = userService.findUserByUserName(auth.getName());
+        modelAndView.addObject("botUsers", botUsers);
+        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("manager");
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/botusers/{id}", method = RequestMethod.GET)
     @ResponseBody

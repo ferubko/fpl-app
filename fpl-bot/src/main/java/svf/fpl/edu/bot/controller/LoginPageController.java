@@ -62,17 +62,4 @@ public class LoginPageController {
         }
         return modelAndView;
     }
-
-    @RequestMapping(value = "/manager", method = RequestMethod.GET)
-    public ModelAndView manager() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<BotUser> botUsers = botUserService.selectBotUsers();
-        AdminUser user = userService.findUserByUserName(auth.getName());
-        modelAndView.addObject("botUsers", botUsers);
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("manager");
-        return modelAndView;
-    }
 }

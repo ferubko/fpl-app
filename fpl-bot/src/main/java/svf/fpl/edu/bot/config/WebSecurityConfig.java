@@ -11,12 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import svf.fpl.edu.bot.security.CustomUserDetailsService;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -33,13 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowedHttpMethods(Arrays.asList("GET", "POST"));
-        firewall.setAllowSemicolon(true);
+        DefaultHttpFirewall firewall = new DefaultHttpFirewall();
         firewall.setAllowUrlEncodedSlash(true);
-        firewall.setAllowBackSlash(true);
-        firewall.setAllowUrlEncodedPercent(true);
-        firewall.setAllowUrlEncodedPeriod(true);
         return firewall;
     }
 
