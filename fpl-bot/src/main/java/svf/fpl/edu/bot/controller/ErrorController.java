@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.firewall.RequestRejectedException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,15 +23,19 @@ public class ErrorController implements AccessDeniedHandler {
 
     @ExceptionHandler(RequestRejectedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleRequestRejectedException(final HttpServletRequest request, final RequestRejectedException ex) {
+    public String handleRequestRejectedException(final HttpServletRequest request, final RequestRejectedException ex, Model model) {
         log.warn("Rejected request for [" + request.getRequestURL().toString() + "]. Reason: " + ex.getMessage());
+        ex.printStackTrace();
+        model.addAttribute("ex", ex);//ex.getMessage()
         return "error";
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handleException(final Exception ex) {
+    public String handleException(final Exception ex, Model model) {
         log.error("Server Error", ex);
+        ex.printStackTrace();
+        model.addAttribute("ex", ex);//ex.getMessage()
         return "error";
     }
 

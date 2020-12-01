@@ -22,7 +22,6 @@ function goBack() {
   window.history.back();
 }
 
-
     </script>
 </head>
 <body>
@@ -30,8 +29,11 @@ function goBack() {
 </button>
 
 <div class="container">
-    <h1>Error occurred</h1>
+    <h1>Error occurred</h1>ex.detailMessage
     <p> An error has occurred. Please contact the administrator </p>
+    <div th:if="${ex!=null}">
+        <p th:utext="${ex.detailMessage}">Test exception</p>
+    </div>
 </div>
 
 </body>
